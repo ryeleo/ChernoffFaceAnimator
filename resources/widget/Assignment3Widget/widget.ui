@@ -46,6 +46,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Stay</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="homeBtn">
         <property name="text">
          <string>Home</string>
@@ -84,43 +91,6 @@
    <item row="0" column="1">
     <widget class="QWidget" name="ControlsPane" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Rotation:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDial" name="dial_2">
-          <property name="maximum">
-           <number>359</number>
-          </property>
-          <property name="wrapping">
-           <bool>true</bool>
-          </property>
-          <property name="notchesVisible">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
@@ -169,13 +139,44 @@
         </item>
        </layout>
       </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Rotation:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDial" name="dial_2">
+          <property name="maximum">
+           <number>359</number>
+          </property>
+          <property name="wrapping">
+           <bool>true</bool>
+          </property>
+          <property name="notchesVisible">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
      </layout>
-     <zorder>verticalLayoutWidget</zorder>
-     <zorder>dial</zorder>
-     <zorder>spinBox_2</zorder>
-     <zorder>spinBox</zorder>
-     <zorder>spinBox_3</zorder>
-     <zorder>verticalLayoutWidget_2</zorder>
     </widget>
    </item>
   </layout>
