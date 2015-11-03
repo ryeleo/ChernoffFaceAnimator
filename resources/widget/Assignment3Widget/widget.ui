@@ -25,30 +25,37 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="exampleBtn">
+       <widget class="QPushButton" name="runBtn">
         <property name="text">
          <string>Run</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="kickBtn">
         <property name="text">
          <string>Kick</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="raiseBtn">
         <property name="text">
          <string>Raise Arm</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="stayBtn">
         <property name="text">
          <string>Stay</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="undoBtn">
+        <property name="text">
+         <string>Undo</string>
         </property>
        </widget>
       </item>
@@ -178,6 +185,20 @@
       </item>
      </layout>
     </widget>
+   </item>
+   <item row="0" column="2">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item>
+      <widget class="QLabel" name="CurrentTime">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="textInteractionFlags">
+        <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
