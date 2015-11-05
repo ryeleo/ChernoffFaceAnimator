@@ -26,6 +26,9 @@ class Assignment3Widget(PyGlassWidget):
         self.timeBox.valueChanged.connect(self._handleValChange)
         self.distBox.valueChanged.connect(self._handleValChange)
         self.rotDial.valueChanged.connect(self._handleValChange)
+		self.prevTime = 0
+		self.prevDist = 0
+		self.prevAngle = 0
     #===================================================================================================
     #                                                                                 H A N D L E R S
     
@@ -60,6 +63,19 @@ class Assignment3Widget(PyGlassWidget):
         c = cmds.polyCylinder(
             r=r, h=5, sx=40, sy=1, sz=1, ax=y, rcp=0, cuv=2, ch=1, n='exampleCylinder2')[0]
         cmds.select(c)
+        response = nimble.createRemoteResponse(globals())
+        response.put('name', c)     
+
+        
+
+
+    #___________________________________________________________________________________________________ _handleUndoBtn
+    def _handleUndoBtn(self):
+        """
+        This callback undoes the last action.
+        
+        """
+        cmds.undo()
         response = nimble.createRemoteResponse(globals())
         response.put('name', c)     
 
