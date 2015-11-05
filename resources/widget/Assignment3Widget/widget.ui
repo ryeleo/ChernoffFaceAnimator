@@ -46,9 +46,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="stayBtn">
+       <widget class="QPushButton" name="rotateBtn">
         <property name="text">
-         <string>Stay</string>
+         <string>Rotate</string>
         </property>
        </widget>
       </item>
@@ -103,12 +103,12 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Start Time:</string>
+           <string>Start Frame:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox">
+         <widget class="QSpinBox" name="timeBox">
           <property name="minimum">
            <number>0</number>
           </property>
@@ -125,7 +125,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_2">
+         <widget class="QSpinBox" name="distBox">
           <property name="maximum">
            <number>240</number>
           </property>
@@ -156,7 +156,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QDial" name="dial_2">
+         <widget class="QDial" name="rotDial">
           <property name="maximum">
            <number>359</number>
           </property>
@@ -189,17 +189,17 @@
    <item row="0" column="2">
     <layout class="QVBoxLayout" name="timeLayout">
      <item>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="FrameTag">
        <property name="text">
-        <string>Frame:</string>
+        <string>Current Frame:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLCDNumber" name="lcdNumber"/>
+      <widget class="QLCDNumber" name="frameDisplay"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="DispTag">
        <property name="text">
         <string>Displacement:</string>
        </property>
@@ -215,7 +215,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLCDNumber" name="lcdNumber_2"/>
+        <widget class="QLCDNumber" name="xDisplay"/>
        </item>
       </layout>
      </item>
@@ -229,7 +229,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLCDNumber" name="lcdNumber_3"/>
+        <widget class="QLCDNumber" name="yDisplay"/>
        </item>
       </layout>
      </item>
@@ -243,7 +243,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLCDNumber" name="lcdNumber_4"/>
+        <widget class="QLCDNumber" name="zDisplay"/>
        </item>
       </layout>
      </item>
