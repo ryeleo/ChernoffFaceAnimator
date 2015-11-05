@@ -24,7 +24,8 @@ class MayaPyMainWindow(PyGlassWindow):
             widgets={
                 'home':MayaPyHomeWidget,
                 'assignment1':Assignment1Widget,
-                'assignment2':Assignment2Widget },
+                'assignment2':Assignment2Widget,
+                'assignment3':Assignment3Widget },
             title='MayaPy',
             **kwargs )
 
