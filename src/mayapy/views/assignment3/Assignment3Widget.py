@@ -3,28 +3,29 @@
 # Scott Ernst
 
 import nimble
+from math import radians, sin, cos
 from nimble import cmds
 from pyglass.widgets.PyGlassWidget import PyGlassWidget
 
 #___________________________________________________________________________________________________ Assignment3Widget
 class Assignment3Widget(PyGlassWidget):
-    """A class for Assignment 1"""
+	"""A class for Assignment 1"""
 	
-	#===================================================================================================
-	#                                                                                       C L A S S
-	
-	
-	#___________________________________________________________________________________________________ __variables__
-	currTime
-	
-
-	#___________________________________________________________________________________________________ __init__
+#===================================================================================================
+#                                                                                       C L A S S
+#___________________________________________________________________________________________________ __init__
 	def __init__(self, parent, **kwargs):
-        """Creates a new instance of Assignment3Widget."""
-        super(Assignment3Widget, self).__init__(parent, **kwargs)
-        self.runBtn.clicked.connect(self._handleRunButton)
-        self.homeBtn.clicked.connect(self._handleReturnHome)
-		self.timeBox.valueChanged[PySide.QtCore.int].connect(self._handleTimeChange)
+		"""Creates a new instance of Assignment3Widget."""
+		super(Assignment3Widget, self).__init__(parent, **kwargs)
+		self.runBtn.clicked.connect(self._handleRunButton)
+		self.kickBtn.clicked.connect(self._handleRunButton)
+		self.raiseBtn.clicked.connect(self._handleRunButton)
+		self.rotateBtn.clicked.connect(self._handleRunButton)
+		self.undoBtn.clicked.connect(self._handleRunButton)
+		self.homeBtn.clicked.connect(self._handleReturnHome)
+		self.timeBox.valueChanged.connect(self._handleValChange)
+		self.distBox.valueChanged.connect(self._handleValChange)
+		self.rotDial.valueChanged.connect(self._handleValChange)
 	#===================================================================================================
 	#                                                                                 H A N D L E R S
 	
@@ -43,12 +44,39 @@ class Assignment3Widget(PyGlassWidget):
 		cmds.select(c)
 		response = nimble.createRemoteResponse(globals())
 		response.put('name', c)
-		#___________________________________________________________________________________________________ _handleReturnHome
+
+
+	#___________________________________________________________________________________________________ _getX
+	def _getX(self):
+		currTime = self.timeBox.value()
+		currDist = self.distBox.value()
+		currAngle = self.rotDial.value()
+		rad = radians(currAngle)
+		h = currDist
+		return(cos(rad) * h)
+
+	#___________________________________________________________________________________________________ _getY
+	def _getY(self):
+		currTime = self.timeBox.value()
+		currDist = self.distBox.value()
+		currAngle = self.rotDial.value()
+		rad = radians(currAngle)
+		h = currDist
+		return(sin(rad) * h)
+
+	#___________________________________________________________________________________________________ _updateDisplays
+	def _updateDisplays(self):
+		self.frameDisplay.display(self.timeBox.value())
+		self.xDisplay.display(self._getX())
+		self.yDisplay.display(self._getY())
+
+
+
+	#___________________________________________________________________________________________________ _handleReturnHome
 	def _handleReturnHome(self):
 		self.mainWindow.setActiveWidget('home')
-		
-		
-	#___________________________________________________________________________________________________ _handleReturnHome
-    def _handleTimeChange(self, arg_1):
-		self.currTime = arg_1
-		self.
+
+
+	#___________________________________________________________________________________________________ _handleTimeChange
+	def _handleValChange(self):
+		self._updateDisplays()
