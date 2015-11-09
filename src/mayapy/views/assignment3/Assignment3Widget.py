@@ -6,6 +6,7 @@ import nimble
 from math import radians, sin, cos
 from nimble import cmds
 from pyglass.widgets.PyGlassWidget import PyGlassWidget
+from Assignment3Tools import findName, bAlter, limbRotate
 
 #___________________________________________________________________________________________________ Assignment3Widget
 class Assignment3Widget(PyGlassWidget):
@@ -26,9 +27,6 @@ class Assignment3Widget(PyGlassWidget):
         self.timeBox.valueChanged.connect(self._handleValChange)
         self.distBox.valueChanged.connect(self._handleValChange)
         self.rotDial.valueChanged.connect(self._handleValChange)
-		self.prevTime = 0
-		self.prevDist = 0
-		self.prevAngle = 0
     #===================================================================================================
     #                                                                                 H A N D L E R S
     
@@ -38,17 +36,65 @@ class Assignment3Widget(PyGlassWidget):
         This callback creates a polygonal cylinder in the Maya scene.
         
         """
-        time = self.currTime
-        r = 50
-        a = 2.0*r
-        y = (0, 1, 0)
-        c = cmds.polyCylinder(
-            r=r, h=5, sx=40, sy=1, sz=1, ax=y, rcp=0, cuv=2, ch=1, n='exampleCylinder2')[0]
-        cmds.select(c)
-        response = nimble.createRemoteResponse(globals())
-        response.put('name', c)
+        #first we raise the leg, then halfway through the leg raise, we start jumping a bit, and raise the back leg in reverse
+        currTime = self.timeBox.value()
+        changeTime = (self.distBox.value()*10)
+        endTime = currTime + changeTime
+        cmds.currentTime(currTime, edit=True)
+        RArm = findName("arm_R")
+        LArm = findName("arm_L")
+        arm = ""
+        leg = ""
+        R = findName("leg_R")
+        L = findName("left_L")
+        bod = findName("body")
         
+        
+        #we start by beginning the X/Z translation keys at the same time
+        cmds.currentTime(currTime, edit=True)
+        bAlter(bod, changeTime, self._getX(), "translateX")
+        cmds.currentTime(currTime, edit=True)
+        bAlter(bod, changeTime, self._getZ(), "translateZ")
+        #then, while currTime < endTime, move the legs, hop up and down.
+        while (currTime < endTime):
+            #move the right leg up
+            limbRotate(R, 10, -60) 
+            #while doing so, move the left arm up
+            cmds.currentTime(currTime, edit=True)
+            limbRotate(LArm, 10, -60)   
+            #while doing so, move the right arm slightly back
+            cmds.currentTime(currTime, edit=True)
+            limbRotate(RArm, 10, 30)
+            #while doings so, move the left leg slightly back
+            cmds.currentTime(currTime, edit=True)
+            limbRotate(L, 10, 30)        
+            #meanwhile, we also need to start hopping.
+            cmds.currentTime(currTime, edit=True)
+            bAlter(bod, 10, 1, "translateY")
+            currTime += 10            
+            #move the right leg down
+            limbRotate(R, 10, 60) 
+            #while doing so, move the left arm down
+            cmds.currentTime(currTime, edit=True)
+            limbRotate(LArm, 10, 60)   
+            #while doing so, move the right arm back forward
+            cmds.currentTime(currTime, edit=True)
+            limbRotate(RArm, 10, -30)
+            #while doings so, move the left leg back forward
+            cmds.currentTime(currTime, edit=True)
+            limbRotate(L, 10, -30)    
+            #no we're at the peak, everything back to neutral
+            cmds.currentTime(currTime, edit=True)
+            bAlter(bod, 10, -1, "translateY")
+            currTime += 10
+            arm = RArm
+            RArm = LArm
+            LArm = arm
 
+            leg = R
+            R = L
+            L = leg
+        self.frameDisplay.display(endTime)
 
     #___________________________________________________________________________________________________ _handleRotBtn
     def _handleRotBtn(self):
@@ -56,15 +102,12 @@ class Assignment3Widget(PyGlassWidget):
         This callback creates a polygonal cylinder in the Maya scene.
         
         """
-        time = self.currTime
-        r = 50
-        a = 2.0*r
-        y = (0, 1, 0)
-        c = cmds.polyCylinder(
-            r=r, h=5, sx=40, sy=1, sz=1, ax=y, rcp=0, cuv=2, ch=1, n='exampleCylinder2')[0]
-        cmds.select(c)
-        response = nimble.createRemoteResponse(globals())
-        response.put('name', c)     
+        cmds.currentTime(self.timeBox.value(), edit=True)
+        currAngle = self.rotDial.value()
+        changeTime = currAngle * (20.0/90.0)
+        bod = findName("body")
+        bAlter(bod, changeTime, currAngle, "rotateY")
+        self.frameDisplay.display(self.timeBox.value() + changeTime)
 
         
 
@@ -75,11 +118,7 @@ class Assignment3Widget(PyGlassWidget):
         This callback undoes the last action.
         
         """
-        cmds.undo()
-        response = nimble.createRemoteResponse(globals())
-        response.put('name', c)     
-
-        
+        cmds.undo()       
 
 
     #___________________________________________________________________________________________________ _handleKickBtn
@@ -88,38 +127,29 @@ class Assignment3Widget(PyGlassWidget):
         This callback creates a polygonal cylinder in the Maya scene.
         
         """
-        time = self.currTime
-        r = 50
-        a = 2.0*r
-        y = (0, 1, 0)
-        c = cmds.polyCylinder(
-            r=r, h=5, sx=40, sy=1, sz=1, ax=y, rcp=0, cuv=2, ch=1, n='exampleCylinder2')[0]
-        cmds.select(c)
-        response = nimble.createRemoteResponse(globals())
-        response.put('name', c)
+        cmds.currentTime(self.timeBox.value(), edit=True)
+        limb = findName("leg_R")
+        limbRotate(limb, 10, 35)
+        cmds.currentTime(self.timeBox.value() + 10, edit=True)
+        limbRotate(limb, 15, -100) 
+        self.frameDisplay.display(self.timeBox.value() + 35)
+
 
         
     #___________________________________________________________________________________________________ _handleRaiseBtn
     def _handleRaiseBtn(self):
         """
         This callback creates a polygonal cylinder in the Maya scene.
-        
+
         """
-        time = self.currTime
-        r = 50
-        a = 2.0*r
-        y = (0, 1, 0)
-        c = cmds.polyCylinder(
-            r=r, h=5, sx=40, sy=1, sz=1, ax=y, rcp=0, cuv=2, ch=1, n='exampleCylinder2')[0]
-        cmds.select(c)
-        response = nimble.createRemoteResponse(globals())
-        response.put('name', c)
-        
+        cmds.currentTime(self.timeBox.value(), edit=True)
+        arm_l = findName("arm_L")
+        limbRotate(arm_l, 20, -140) 
+        self.frameDisplay.display(self.timeBox.value() + 20)
 
 
     #___________________________________________________________________________________________________ _getX
-    def _getX(self):
-        currTime = self.timeBox.value()
+    def _getZ(self):
         currDist = self.distBox.value()
         currAngle = self.rotDial.value()
         rad = radians(currAngle)
@@ -127,9 +157,8 @@ class Assignment3Widget(PyGlassWidget):
         return(cos(rad) * h)
     
 
-    #___________________________________________________________________________________________________ _getY
-    def _getY(self):
-        currTime = self.timeBox.value()
+    #___________________________________________________________________________________________________ _getZ
+    def _getX(self):
         currDist = self.distBox.value()
         currAngle = self.rotDial.value()
         rad = radians(currAngle)
@@ -139,9 +168,9 @@ class Assignment3Widget(PyGlassWidget):
 
     #___________________________________________________________________________________________________ _updateDisplays
     def _updateDisplays(self):
-        self.frameDisplay.display(self.timeBox.value())
+        #self.frameDisplay.display(self.timeBox.value())
         self.xDisplay.display(self._getX())
-        self.yDisplay.display(self._getY())
+        self.zDisplay.display(self._getZ())
 
 
 

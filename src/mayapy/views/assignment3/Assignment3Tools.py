@@ -1,4 +1,4 @@
-import maya.cmds as mc
+from nimble import cmds as mc
 
 def findName(nameish):
 
@@ -11,14 +11,17 @@ def findName(nameish):
     print(bodyName)
     return bodyName
             
-
-def legRotate(legName, startTime, endTime, startVal, endVal):
-    mc.select(legName)
-    #first we start 
-    mc.currentTime(startTime)
-    mc.setKeyframe(attribute='rotateX', v=startVal)
+def bAlter(bName, timeFrame, changeVal, chStr):
+    mc.select(bName)    
+    startTime = mc.currentTime(query=True)
+    endTime = startTime + timeFrame
+    rotBy = mc.getAttr(bName+ "." + chStr) + changeVal
+    mc.setKeyframe(attribute=chStr)
     mc.currentTime(endTime)
-    mc.setKeyframe(attribute='rotateX', v=endVal)
+    mc.setKeyframe(attribute=chStr, v=rotBy)
+
+def limbRotate(limbName, timeFrame, changeVal):
+    bAlter(limbName, timeFrame, changeVal, "rotateX")
     
 def runFrom(bodyName, startTime, endTime):        
     mc.select(bodyName)
@@ -53,5 +56,3 @@ def runFrom(bodyName, startTime, endTime):
     mc.rotate(0,0,0)
     mc.currentTime(startTime)
     
-bodName = findName('body')
-runFrom(bodName, 1, 90)
