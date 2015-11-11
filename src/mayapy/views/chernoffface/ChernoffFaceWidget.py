@@ -1,6 +1,6 @@
-# Assignment1Widget.py
+# ChernoffFaceWidget.py
 # (C)2013
-# Scott Ernst
+# Scott Ernst, Peter McKay, Ryan Leonard.
 
 import nimble
 from math import radians, sin, cos
