@@ -1,16 +1,21 @@
 from nimble import cmds as mc
+from difflib import SequenceMatcher as sm
 
-def findName(nameish):
-
+def findName(namelike):
     objs = mc.ls()
     bodyName = ""
+	compareScore = 0
+	newScore = 0
     for nm in objs:
-        if nameish in nm:
-            bodyName = nm
-            break
-    print(bodyName)
+		newScore = sm(None, nameLike, nm).ratio()
+		if newScore > compareScore:
+			compareScore = newScore
+			bodyName = nm
+	
+    print("query for: \"" + namelike + "\" returns: " + bodyName)
     return bodyName
-            
+
+# alters the aspects of some object.
 def bAlter(bName, timeFrame, changeVal, chStr):
     mc.select(bName)    
     startTime = mc.currentTime(query=True)
@@ -18,7 +23,8 @@ def bAlter(bName, timeFrame, changeVal, chStr):
     rotBy = mc.getAttr(bName+ "." + chStr) + changeVal
     mc.setKeyframe(attribute=chStr)
     mc.currentTime(endTime)
-    mc.setKeyframe(attribute=chStr, v=rotBy)
+    mc.setKeyframe(attribute=chStr, v=rotBy)	
+    mc.currentTime(startTimeTime)
 
 def limbRotate(limbName, timeFrame, changeVal):
     bAlter(limbName, timeFrame, changeVal, "rotateX")
