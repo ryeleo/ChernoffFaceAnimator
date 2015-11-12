@@ -28,7 +28,7 @@ class MayaPyMainWindow(PyGlassWindow):
                 'assignment1':Assignment1Widget,
                 'assignment2':Assignment2Widget,
                 'assignment3':Assignment3Widget, 
-                'Project':ChernoffFaceWidget },
+                'project':ChernoffFaceWidget },
             title='MayaPy',
             **kwargs )
 
