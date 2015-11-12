@@ -17,7 +17,7 @@ class ChernoffFaceWidget(PyGlassWidget):
 #___________________________________________________________________________________________________ __init__
     def __init__(self, parent, **kwargs):
         """Creates a new instance of Assignment3Widget."""
-        super(Assignment3Widget, self).__init__(parent, **kwargs)
+        super(ChernoffFaceWidget, self).__init__(parent, **kwargs)
         self.eyebrowAngleSlider.valueChanged.connect(self._handleValChange)
         self.mouthAngleSlider.valueChanged.connect(self._handleValChange)
         self.eyeSizeSlider.valueChanged.connect(self._handleValChange)
