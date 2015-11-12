@@ -18,12 +18,15 @@ class ChernoffFaceWidget(PyGlassWidget):
     def __init__(self, parent, **kwargs):
         """Creates a new instance of Assignment3Widget."""
         super(ChernoffFaceWidget, self).__init__(parent, **kwargs)
+		# slider pane
         self.eyebrowAngleSlider.valueChanged.connect(self._handleValChange)
         self.mouthAngleSlider.valueChanged.connect(self._handleValChange)
         self.eyeSizeSlider.valueChanged.connect(self._handleValChange)
         self.headShapeSlider.valueChanged.connect(self._handleValChange)
         self.eyeSpacingSlider.valueChanged.connect(self._handleValChange)
-		
+		# nav pane
+        self.runBtn.clicked.connect(self._handleRunBtn)
+        self.homeBtn.clicked.connect(self._handleReturnHome)
     #===================================================================================================
     #                                                                                 H A N D L E R S
   
@@ -34,3 +37,12 @@ class ChernoffFaceWidget(PyGlassWidget):
 		print("eye size: "+str(self.eyeSpacingSlider.value()))
 		print("head shape: "+str(self.eyeSpacingSlider.value()))
 		print("eye spacing: "+str(self.eyeSpacingSlider.value()))
+
+
+	#___________________________________________________________________________________________________ _handleRunBtn
+    def _handleRunBtn(self):
+		print("Generate!")
+
+    #___________________________________________________________________________________________________ _handleReturnHome
+    def _handleReturnHome(self):
+        self.mainWindow.setActiveWidget('home')
