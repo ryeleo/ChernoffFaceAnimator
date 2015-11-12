@@ -25,3 +25,11 @@ The python application will be separated into a simple layered hierarchy followi
    * Programmatically controls the model’s rigging via a Nimble Bridge
    * Will poll state of the maya model before making alterations
    * Relies heavily on Model’s naming convention
+
+Other files of interest include:
+
+1. [mpl_cfaces.py] (https://gist.github.com/pemj/c32df80f53e0ccfdbd55) is a bit of code that generates 2D chernoff faces.  Interface is, uh, suboptimal, but we can probably encapsulate it without too much issue.
+
+2. [Main Window](https://github.com/pemj/MayaPy/blob/master/src/mayapy/MayaPyMainWindow.py) is a file that describes the homepage of the project interface.  It currently contains a link to the stubbed out version of the project screen.
+
+2. [Home Screen](https://github.com/pemj/MayaPy/blob/master/src/mayapy/views/home/MayaPyHomeWidget.py) is a file that dictates the semantics of the home page.  That is to say, it listens to buttons and executes the code to display other screens (or to connect to maya).
